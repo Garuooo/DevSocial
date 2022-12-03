@@ -1,0 +1,177 @@
+{%extends 'home.html'%}
+{%load static%}
+{%block content%}
+
+  <!-- Main Section -->
+  <main class="profile my-md">
+    <d class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <div class="card text-center">
+            <div class="card__body dev">
+              {%if profile.picture%}
+              <img class="avatar avatar--xl" src="{{profile.picture.url}}" />
+              {% endif %}
+              <h2 class="dev__name">{{profile.username}}</h2>
+              <p class="dev__title">{{profile.headline}}</p>
+              <p class="dev__location">{{profile.location}}</p>
+              <ul class="dev__social">
+                {%if profile.github %}
+                <li>
+                  <a title="Github" href="{{profile.github}}" target="_blank"><i class="im im-github"></i></a>
+                </li>
+                {%endif%}
+
+                {%if project.stackoverflow%}
+                <li>
+                  <a title="Stackoverflow" href="{{profile.stackoverflow}" target="_blank"><i class="im im-stackoverflow"></i></a>
+                </li>
+                {%endif%}
+
+                {%if profile.twitter%}
+                <li>
+                  <a title="Twitter" href="{{profile.twitter}}" target="_blank"><i class="im im-twitter"></i></a>
+                </li>
+                {%endif%}
+
+                {%if profile.linkedin%}
+
+                <li>
+                  <a title="LinkedIn" href="{{profile.linkedin}}" target="_blank"><i class="im im-linkedin"></i></a>
+                </li>
+                {%endif%}
+
+                {%if profile.personalwebsite%}
+                <li>
+                  <a title="{{profile.personalwebsite}}" href="#" target="_blank"><i class="im im-globe"></i></a>
+                </li>
+                {%endif%}
+
+              </ul>
+              {%if request.user.profile != profile%}
+              <a href="{%url 'create_message' profile.id%}" class="btn btn--sub btn--lg">Send Message </a>
+              {%endif%}
+            </div>
+              {%if request.user.profile == profile%}
+              <a style='margin-bottom:30px;' href="{%url 'update_profile' %}" class="btn btn--primary btn--lg">Update Profile </a>
+              {%endif%}
+          </div>
+        </div>
+        <div class="column column--2of3">
+          <div class="devInfo">
+            <h3 class="devInfo__title">About Me</h3>
+            <p class="devInfo__about">
+              {{profile.bio}}
+            </p>
+          </div>
+          <div class="devInfo">
+            <h3 class="devInfo__title">Skills</h3>
+            <div class="devInfo__skills">
+              {%if request.user.profile == profile%}
+              <a style='margin-bottom:30px;' href="{%url 'create_skill' %}" class="btn btn--primary btn--lg">Add Skill </a>
+              {%endif%}
+          {%for skill in profile.skill_set.all %}
+             {%if skill.body%}
+<div class="devSkill">
+  <h4 class="devSkill__title">{{skill.name}}</h4>
+  <p class="devSkill__info">
+    {{skill.body}}
+  </p>
+</div>
+{%if request.user.profile == profile%}
+  <a href="{%url 'edit_skill' skill.id%}">Edit Skill</a>
+  <a href="{%url 'delete_skill' skill.id%}">Delete Skill</a>
+{%endif%}
+             {%endif%}
+              {%endfor%}
+              <h3 class="devInfo__subtitle">Other Skills</h3>
+              <div class="devInfo__otherSkills">
+              {%for skill in profile.skill_set.all %}
+              {%if skill.body == ''%}
+                  <span class="tag tag--pill tag--sub tag--lg">
+                  <small>{{skill.name}}</small>
+                </span>
+{%if request.user.profile == profile%}
+  <a href="{%url 'edit_skill' skill.id%}">Edit Skill</a>
+  <br>
+{%endif%}
+              {%endif%}
+              {%endfor%}
+              </div>
+            </div>
+          </div>
+          <div class="devInfo">
+            <h3 class="devInfo__title">Projects</h3>
+            <div class="grid grid--two">
+
+              {%for project in projects%}
+              <div class="column">
+                <div class="card project" style="text-align:center;">
+                  <a href="{%url 'project' project.id%}" class="project">
+                    <img style="width:100%; height:400px; object-fit:cover;" src="{{project.image.url}}" alt="project thumbnail" />
+                    <div class="card__body">
+                      <h3 class="project__title">{{project.title}}</h3>
+                      <p><a class="project__author" href="{%url 'profile' project.owner.id%}">{{project.owner.name}}</a></p>
+                      <p class="project--rating">
+                        <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
+                        Feedback ({{project.votes}} Votes)
+                      </p>
+                      <div class="project__tags">
+                     {%for tag in project.tags.all%}
+                       
+                  <span class="tag tag--pill tag--main">
+                    <small>{{tag.name}}</small>
+                  </span>
+                     {%endfor%}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              
+              </div>
+              {%endfor%}
+
+            </div>
+          </div>
+
+          {%if signatures%}
+
+            <div class="devInfo">
+            <h3 class="devInfo__title">Signatures</h3>
+            <div class="grid grid--two">
+              
+              {%for signature in signatures%}
+              <div class="column">
+                <div class="card project" style="text-align:center;">
+                  <a href="{%url 'signature' signature.id%}" class="project">
+                    <img style="width:100%;" class="project__thumbnail" src="{{signature.image.url}}" alt="project thumbnail" />
+                    <div class="card__body">
+                      <h3 class="project__title">{{signature.title}}</h3>
+                      <p><a class="project__author" href="{%url 'profile' signature.owner.id%}">{{signature.owner.name}}</a></p>
+                      <div class="project__tags">
+                     {%for tag in signature.tags.all%}
+                       
+                  <span class="tag tag--pill tag--main">
+                    <small>{{tag.name}}</small>
+                  </span>
+                     {%endfor%}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              
+              </div>
+              {%endfor%}
+
+            </div>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+  </
+  </main>
+
+  {%endblock %}
+</main>

@@ -1,0 +1,57 @@
+{%extends 'home.html' %} {%load static%} {%block content%} 
+    <main class="projects">
+        <section class="hero-section text-center">
+            <div class="container container--narrow">
+                <div class="hero-section__box">
+                    <h2><span> Signatures </span></h2>
+                </div>
+            </div>
+        </section>
+        <section class="projectsList">
+            <div class="container">
+                <div class="grid grid--three">
+                {% for signature in signatures %}
+                <div class="column">
+                    <div class="card project">
+                        <a style="width:100%;" href="{% url 'signature' signature.id %}" class="project">
+                            <img  class="project__thumbnail" src="{{signature.image.url}}" alt="project thumbnail" />
+                            <div class="card__body">
+                                <h3 class="project__title">{{signature.title}}</h3>
+                                <p><a class="project__author" href="{% url 'profile' signature.owner.id %}">By
+                                        {{signature.owner.first_name}}</a>
+                                </p>
+
+                                <div class="project__tags">
+                                    {% for tag in signature.tags.all %}
+                                    <span class="tag tag--pill tag--main">
+                                        <small>{{tag}}</small>
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="pagination">
+            <ul class="container">
+                <li><a href="#" class="btn btn--disabled">&#10094; Prev</a></li>
+                <li><a href="#" class="btn btn--sub">01</a></li>
+                <li><a href="#" class="btn">02</a></li>
+                <li><a href="#" class="btn">03</a></li>
+                <li><a href="#" class="btn">04</a></li>
+                <li><a href="#" class="btn">05</a></li>
+                <li><a href="#" class="btn">06</a></li>
+                <li><a href="#" class="btn">07</a></li>
+                <li><a href="#" class="btn">08</a></li>
+                <li><a href="#" class="btn">09</a></li>
+                <li><a href="#" class="btn">10</a></li>
+                <li><a href="#" class="btn">Next &#10095;</a></li>
+            </ul>
+        </div>
+
+ {%endblock content%}

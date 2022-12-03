@@ -1,0 +1,66 @@
+{%extends 'home.html'%} {%load static%} {%block content%}
+
+<div class="auth">
+  <div class="card">
+    <div class="auth__header text-center">
+      <a href="/">
+        <img src="{%static 'images/icon.svg'%}" alt="icon" />
+      </a>
+      <h3>Account Login</h3>
+      <p>Hello Developer, Welcome Back!</p>
+    </div>
+    <form enctype="multipart/form-data" method="POST">
+      {%csrf_token%}
+      <!-- Input:Email -->
+      <div class="form__field">
+        <label for="formInput#text">email: </label>
+        <input
+          class="input input--text"
+          id="formInput#text"
+          type="email"
+          name="email"
+          placeholder="Enter your Email..."
+        />
+      </div>
+
+      <!-- Input:username -->
+      <div class="form__field">
+        <label for="formInput#text">Username: </label>
+        <input
+          class="input input--text"
+          id="formInput#text"
+          type="text"
+          name="username"
+          placeholder="Enter your username..."
+        />
+      </div>
+
+      <!-- Input:Password -->
+      <div class="form__field">
+        <label for="formInput#password">Password: </label>
+        <input
+          class="input input--password"
+          id="formInput#passowrd"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+        />
+      </div>
+
+      <div class="auth__actions">
+        <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+        <a href="forgetpassword.html">Forget Password?</a>
+
+      </form>
+      </div>
+      
+          <div class="auth__alternative">
+            <a href="{%url 'login_with_signature'%}">Login With Signature</a>
+            <p>Don’t have an Account?</p>
+      <a href="{%url 'sign_up'%}">Sign Up</a>
+    </div>
+  </div>
+</div>
+    {%endblock content%}
+
+

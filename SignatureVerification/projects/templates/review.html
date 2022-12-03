@@ -1,0 +1,33 @@
+{%extends 'home.html'%} {%load static%} {%block content%}
+<div class="auth">
+  <div class="card">
+    <div class="auth__header text-center">
+      <a href="/">
+        <img src="{%static 'images/icon.svg'%}" alt="icon" />
+      </a>
+      {%if value == 'create'%}
+      <h3>Add Review</h3>
+      {%else%}
+      <h3>Update Review</h3>
+      {%endif%}
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="form auth__form">
+      {% csrf_token %} {% for field in form %}
+      <div class="form__field">
+        <label for="formInput#text">{{field.label}}</label>
+        {{field}}
+        <!-- {% if field.help_text %}
+                <small>{{field.help_text}}</small>
+                {% endif %} -->
+        {% for error in field.errors %}
+        <p style="color: red">{{error}}</p>
+        {% endfor %}
+      </div>
+      {% endfor %}
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</div>
+
+{%endblock content%}

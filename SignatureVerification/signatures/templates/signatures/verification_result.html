@@ -1,0 +1,14 @@
+{%extends 'home.html'%} {%load static%} {%block content%}
+<div class="auth">
+    <div class="card">
+        <h1 style="text-align: center">{{prediction}}</h1>
+                <div class="auth__alternative">
+                    <div><a href="{%url 'verify_two_signatures'%}">Verify Two Signatures</a></div>
+                    <div>
+                    <a href="{%url 'profiles'%}">Home</a>
+                    </div>
+                </div>
+    </div>
+
+</div>
+{%endblock content%}

@@ -1,0 +1,30 @@
+{%extends "home.html"%} {%block content%}
+<!-- Main Section -->
+<main class="inbox my-xl">
+  <div class="content-box">
+    <h3 class="inbox__title">Recieved(<span>{{unread_length}}</span>)</h3>
+    <ul class="messages message--unread">
+      {%for message in receieved_messages%}
+      <li class="message {%if not message.is_read%}message--unread{%endif%}">
+        <a href="{%url 'message' message.id%}">
+          <span class="message__author">from {{message.sender.user.username}}</span>
+          <span class="message__subject">{{message.title}}</span>
+          <span class="message__date">{{message.created}}</span>
+        </a>
+      </li>
+      {%endfor%}
+      
+      <h2>Sent<h2>
+      {%for message in sent_messages%}
+      <li class="message">
+        <a href="{%url 'message' message.id%}">
+          <span class="message__author">to {{message.reciever.user.username}}</span>
+          <span class="message__subject">{{message.title}}</span>
+          <span class="message__date">{{message.created}}</span>
+        </a>
+      </li>
+      {%endfor%}
+    </ul>
+  </div>
+  {%endblock%}
+</main>
